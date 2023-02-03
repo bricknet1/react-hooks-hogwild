@@ -26,6 +26,7 @@ function App() {
 	console.log(filteredHogs);
 	
 	const pigCard = filteredHogs.map(hog => <PigCards key={hog.name} {...hog}/>)
+	// const pigCard = filteredHogs.map(PigCards)
 	
 	function handleFilter(e){
 		setCurrentFilter(e.target.value)
