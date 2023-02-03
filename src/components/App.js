@@ -6,12 +6,6 @@ import {useState} from 'react'
 
 function App() {
 
-	/*
-	const pigCard = 
-
-	*/
-
-	
 	const [currentFilter, setCurrentFilter] = useState('all')
 	
 	const filteredHogs = hogs.filter(hog => {
@@ -23,25 +17,75 @@ function App() {
 			return true
 		}
 	})
-	console.log(filteredHogs);
 	
-	const pigCard = filteredHogs.map(hog => <PigCards key={hog.name} {...hog}/>)
 	// const pigCard = filteredHogs.map(PigCards)
 	
 	function handleFilter(e){
 		setCurrentFilter(e.target.value)
 	}
 
-	return (
+///////////////////////
+
+let sortedHogs
+
+const [isNameSorted, setIsNameSorted] = useState(false)
+
+if (isNameSorted) {sortedHogs =
+	filteredHogs.sort((a,b) => {
+		if (a.name.toLowerCase() < b.name.toLowerCase()) {
+			return -1;
+		}
+		if (a.name.toLowerCase() > b.name.toLowerCase()) {
+			return 1;
+		}
+		return 0;
+	})
+} else {sortedHogs = filteredHogs}
+
+function handleSortByName(){
+	setIsWeightSorted(false)
+	setIsNameSorted(!isNameSorted)
+}
+
+///////////////////////
+
+const [isWeightSorted, setIsWeightSorted] = useState(false)
+
+if (isWeightSorted) {sortedHogs =
+	filteredHogs.sort((a,b) => {
+		if (a.weight < b.weight) {
+			return -1;
+		}
+		if (a.weight > b.weight) {
+			return 1;
+		}
+		return 0;
+	})
+} else {sortedHogs = filteredHogs}
+
+function handleSortByWeight(){
+	setIsNameSorted(false)
+	setIsWeightSorted(!isWeightSorted)
+}
+
+////////////////////////
+
+const pigCard = sortedHogs.map(hog => <PigCards key={hog.name} {...hog}/>)
+
+////////////////////////
+
+return (
 		<div className="App">
 			<Nav />
-			<div className="ui grid container">
-				<div className="ui eight wide column">
 					<select onChange={handleFilter}>
 						<option value="all">All</option>
 						<option value="greased">Greased Hogs</option>
 						<option value="notGreased">Non-greased Hogs</option>
-					</select>
+					</select> 
+					<button onClick={handleSortByName} >Sort by Name</button> 
+					<button onClick={handleSortByWeight} >Sort by Weight</button>
+			<div className="ui grid container">
+				<div className="ui eight wide column">
 					{pigCard}
 				</div>
 			</div>
