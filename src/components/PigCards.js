@@ -11,7 +11,7 @@ const PigCards = (hog)=>{
     }
     
     return (
-        <article onClick={handleClick} key={hog.id} className="pigTile">
+        <article onClick={handleClick} className="pigTile">
             <h3>{hog.name}</h3>
             <img src={hog.image} alt={hog.name} className="minPigTile"></img>
             {isDisplayed && PigDetails(hog)}

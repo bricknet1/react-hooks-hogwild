@@ -11,24 +11,24 @@ function App() {
 
 	*/
 
-	const pigCard = hogs.map(PigCards)
 	
-	// const [currentFilter, setCurrentFilter] = useState('all')
-	// console.log(currentFilter);
-
+	const [currentFilter, setCurrentFilter] = useState('all')
+	
+	const filteredHogs = hogs.filter(hog => {
+		if (currentFilter === "greased"){
+			return hog.greased
+		} else if (currentFilter === "notGreased"){
+			return !hog.greased
+		} else {
+			return true
+		}
+	})
+	console.log(filteredHogs);
+	
+	const pigCard = filteredHogs.map(hog => <PigCards key={hog.name} {...hog}/>)
 	
 	function handleFilter(e){
-		// setCurrentFilter((filter)=> filter = e.target.value)
-		const filteredHogs = hogs.filter((hog)=>{
-			if (e.target.value === "greased"){
-				return hog.greased
-			} else if (e.target.value === "notGreased"){
-				return !hog.greased
-			} else if (e.target.value === "all"){
-				return hog
-			}
-		})
-		console.log(filteredHogs);
+		setCurrentFilter(e.target.value)
 	}
 
 	return (
